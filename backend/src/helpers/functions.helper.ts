@@ -3,16 +3,19 @@ import { AppError } from "../middlewares/app.error";
 import User from "../models/user.model";
 import bcrypt from "bcrypt";
 
+
 export const getUserByIdAuth = async (id: number) => {
-  const user = await User.findByPk(id);
+  const user = await User.findByPk(id,{
+    attributes:["id","email","avatar","name"]
+  });
 
   if (!user) {
     throw new Error("User not found");
   }
   return user;
 };
-export const createToken = (user: User) => {
-  return createJsonWebToken({ id: user.id });
+export const createToken = (id:number) => {
+  return createJsonWebToken({ id });
 };
 
 export const verifyPassword = async (
