@@ -2,15 +2,15 @@ import { RequestHandler } from "express";
 import { createToken, formatUser } from "../../helpers/functions.helper";
 import { registerSchema } from "../schema/register.schema";
 import { registerService } from "../service/register.service";
-import crypto from "crypto";
 import { generateToken } from "../../middlewares/csrf.middleware";
+import { createJsonWebToken } from "../../libs/jwt";
 
 export const registerController: RequestHandler = async (req, res, next) => {
   try {
     const data = registerSchema.parse(req.body);
     const user = await registerService(data);
-    const token = createToken(user);
-    const formatedUser = await formatUser(user);
+    const token = createJsonWebToken({id:user.id});
+    const formatedUser =  formatUser(user);
     const csrfToken = generateToken(req, res);
     res.cookie("session", token, {
       httpOnly: true,
