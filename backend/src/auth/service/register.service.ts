@@ -3,7 +3,7 @@ import { AppError } from "../../middlewares/app.error";
 import User from "../../models/user.model";
 import { registerInput } from "../schema/register.schema";
 
-export const registerService = async (data: registerInput) => {
+export const registerService = async (data: registerInput):Promise<User> => {
   const existingUser = await getUserByEmail(data.email);
 
   if (existingUser) {

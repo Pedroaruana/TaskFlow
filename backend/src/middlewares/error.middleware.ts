@@ -8,21 +8,22 @@ export const globalErrorHandler = (
   res: Response,
   next: NextFunction,
 ) => {
+  
   if (error instanceof AppError) {
     res.status(error.statuscCode).json({
       error: error.message,
-      data: null,
+     
     });
     return;
   }
   if (error instanceof ZodError) {
     const errorMessage = error.issues.map((err) => err.message).join(", ");
-    res.status(200).json({ error: errorMessage, data: null });
+    res.status(400).json({ error: errorMessage });
     return;
   }
-  console.error("Error", error);
+
   res.status(500).json({
-    error: "internal server error",
-    data: null,
+    error: "Internal server error",
+
   });
 };

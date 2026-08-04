@@ -2,8 +2,9 @@ import { RequestHandler } from "express";
 import { loginSchema } from "../schema/login.schema";
 import { AppError } from "../../middlewares/app.error";
 import { loginService } from "../service/login.service";
-import { createToken, formatUser } from "../../helpers/functions.helper";
+import {  formatUser } from "../../helpers/functions.helper";
 import { generateToken } from "../../middlewares/csrf.middleware";
+import { createJsonWebToken } from "../../libs/jwt";
 
 export const loginController: RequestHandler = async (req, res, next) => {
   try {
@@ -15,7 +16,7 @@ export const loginController: RequestHandler = async (req, res, next) => {
       throw new AppError("Invalid credentials", 401);
     }
 
-    const token = createToken(result);
+    const token = createJsonWebToken({id:result.id});
 
     const userFormated = formatUser(result);
 

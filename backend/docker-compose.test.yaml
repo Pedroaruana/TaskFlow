@@ -1,0 +1,64 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.test.e2e
+    container_name: task-api-e2e
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+    environment:
+      NODE_ENV: test
+      PORT: 3000
+
+      JSONWEBTOKEN_SECRET: o13473y943jkqh
+      DB_NAME: taskflow_test
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_HOST: db
+      DB_PORT: 3306
+      CSRF_SECRET: "qeiqojeuhqe"
+      JWT_SECRET: e2e-jwt-secret
+      JWT_EXPIRES_IN: 7d
+
+    command: sh -c "npm run test:e2e"
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+  db:
+    image: mysql:8
+    container_name: mysql-e2e
+    restart: unless-stopped
+
+    environment:
+      MYSQL_DATABASE: taskflow_test
+      MYSQL_ROOT_PASSWORD: root
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql_e2e_data:/var/lib/mysql
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-uroot",
+          "-proot"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+
+volumes:
+  mysql_e2e_data:
