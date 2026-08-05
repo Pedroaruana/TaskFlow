@@ -60,6 +60,8 @@ Copy the root `.env.example` to `.env` and adjust the credentials if you don't w
 
 ```bash
 cp .env.example .env
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
 ```
 
 ### Start
