@@ -10,6 +10,7 @@ Thank you to everyone who has contributed to this project ❤️
 
 Contributors will be added here after their first accepted Pull Request.
 
-| Name         | Contribution                                    | Site/Profile               |              
-|--------------|-------------------------------------------------|----------------------------|
-| Flávio Pavim | Docker, CI, Node.js, React, React Native and C# | https://flaviopavim.com.br |
+| Name                    | Contribution                                    | Site/Profile                                           |              
+|-------------------------|-------------------------------------------------|--------------------------------------------------------|
+| Flávio Pavim            | Docker, CI, Node.js, React, React Native and C# | https://flaviopavim.com.br                             |
+| Estefânio Silva Ribeiro | Layout                                          | https://linkedin.com/in/estef%C3%A2nio-silva-5319b2133 |
