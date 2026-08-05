@@ -45,9 +45,11 @@ export default function LoginScreen() {
               onChangeText={setPassword}
             />
 
-            <ThemedText type="link" themeColor="brandPrimary" style={styles.forgotPassword}>
-              Esqueci minha senha
-            </ThemedText>
+            <Link href="/forgot-password" style={styles.forgotPassword}>
+              <ThemedText type="link" themeColor="brandPrimary">
+                Esqueci minha senha
+              </ThemedText>
+            </Link>
 
             <AuthButton title="Entrar" />
           </ThemedView>
@@ -55,7 +57,7 @@ export default function LoginScreen() {
           <ThemedView style={styles.footer}>
             <ThemedText themeColor="textSecondary">Não tem uma conta?</ThemedText>
             <Link href="/signup">
-              <ThemedText type="linkPrimary">Cadastre-se</ThemedText>
+              <ThemedText type="link" themeColor="brandPrimary">Cadastre-se</ThemedText>
             </Link>
           </ThemedView>
         </ThemedView>

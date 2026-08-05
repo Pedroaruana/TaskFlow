@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet } from 'react-native';
 
 import { AuthButton } from '@/components/auth-button';
@@ -9,9 +9,8 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { MaxContentWidth, Spacing } from '@/constants/theme';
 
-export default function SignupScreen() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+export default function ResetPasswordScreen() {
+  const router = useRouter();
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
@@ -24,45 +23,32 @@ export default function SignupScreen() {
           <AuthHeader />
 
           <ThemedText type="title" style={styles.title}>
-            Crie sua conta
+            Crie uma nova senha
           </ThemedText>
           <ThemedText themeColor="textSecondary" style={styles.subtitle}>
-            Junte-se a milhares de equipes e organize seus projetos hoje mesmo.
+            Sua nova senha deve ser diferente da anterior.
           </ThemedText>
 
           <ThemedView style={styles.form}>
-            <AuthInput label="Nome completo" placeholder="Seu nome" value={name} onChangeText={setName} />
             <AuthInput
-              label="Email Corporativo"
-              placeholder="nome@empresa.com"
-              autoCapitalize="none"
-              keyboardType="email-address"
-              value={email}
-              onChangeText={setEmail}
-            />
-            <AuthInput
-              label="Senha"
+              label="Nova senha"
               placeholder="********"
               secureTextEntry
               value={password}
               onChangeText={setPassword}
             />
             <AuthInput
-              label="Confirme a senha"
+              label="Confirme a nova senha"
               placeholder="********"
               secureTextEntry
               value={passwordConfirmation}
               onChangeText={setPasswordConfirmation}
             />
 
-            <AuthButton title="Cadastre-se" />
-          </ThemedView>
-
-          <ThemedView style={styles.footer}>
-            <ThemedText themeColor="textSecondary">Já tem uma conta?</ThemedText>
-            <Link href="/login">
-              <ThemedText type="link" themeColor="brandPrimary">Entrar</ThemedText>
-            </Link>
+            <AuthButton
+              title="Resetar senha"
+              onPress={() => password.trim() && passwordConfirmation.trim() && router.replace('/login')}
+            />
           </ThemedView>
         </ThemedView>
       </ScrollView>
@@ -95,11 +81,5 @@ const styles = StyleSheet.create({
   },
   form: {
     gap: Spacing.three,
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: Spacing.one,
-    marginTop: Spacing.four,
   },
 });
