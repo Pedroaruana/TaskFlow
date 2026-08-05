@@ -1,6 +1,5 @@
 import { RequestHandler } from "express";
 import { loginSchema } from "../schema/login.schema";
-import { AppError } from "../../middlewares/app.error";
 import { loginService } from "../service/login.service";
 import {  formatUser } from "../../helpers/functions.helper";
 import { generateToken } from "../../middlewares/csrf.middleware";
@@ -11,10 +10,6 @@ export const loginController: RequestHandler = async (req, res, next) => {
     const data = loginSchema.parse(req.body);
 
     const result = await loginService(data.email, data.password);
-
-    if (!result) {
-      throw new AppError("Invalid credentials", 401);
-    }
 
     const token = createJsonWebToken({id:result.id});
 

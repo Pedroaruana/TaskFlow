@@ -1,11 +1,12 @@
 import { getUserByEmail } from "../../helpers/functions.helper";
+import { AppError } from "../../middlewares/app.error";
 
 export const forgotPasswordService = async (email: string) => {
-  email = email.toLowerCase();
+
   const user = await getUserByEmail(email);
 
   if (!user) {
-    return null;
+    throw new AppError("Email not found.", 404);
   }
   
   return user;
