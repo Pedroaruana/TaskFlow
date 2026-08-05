@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet } from 'react-native';
 
 import { AuthButton } from '@/components/auth-button';
@@ -9,11 +9,9 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { MaxContentWidth, Spacing } from '@/constants/theme';
 
-export default function SignupScreen() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+export default function VerifyOtpScreen() {
+  const router = useRouter();
+  const [otp, setOtp] = useState('');
 
   return (
     <KeyboardAvoidingView
@@ -24,44 +22,32 @@ export default function SignupScreen() {
           <AuthHeader />
 
           <ThemedText type="title" style={styles.title}>
-            Crie sua conta
+            Verifique seu código
           </ThemedText>
           <ThemedText themeColor="textSecondary" style={styles.subtitle}>
-            Junte-se a milhares de equipes e organize seus projetos hoje mesmo.
+            Digite o código de 6 dígitos que enviamos para seu email.
           </ThemedText>
 
           <ThemedView style={styles.form}>
-            <AuthInput label="Nome completo" placeholder="Seu nome" value={name} onChangeText={setName} />
             <AuthInput
-              label="Email Corporativo"
-              placeholder="nome@empresa.com"
-              autoCapitalize="none"
-              keyboardType="email-address"
-              value={email}
-              onChangeText={setEmail}
-            />
-            <AuthInput
-              label="Senha"
-              placeholder="********"
-              secureTextEntry
-              value={password}
-              onChangeText={setPassword}
-            />
-            <AuthInput
-              label="Confirme a senha"
-              placeholder="********"
-              secureTextEntry
-              value={passwordConfirmation}
-              onChangeText={setPasswordConfirmation}
+              label="Código OTP"
+              placeholder="000000"
+              keyboardType="number-pad"
+              maxLength={6}
+              value={otp}
+              onChangeText={setOtp}
+              style={styles.otpInput}
             />
 
-            <AuthButton title="Cadastre-se" />
+            <AuthButton
+              title="Verificar OTP"
+              onPress={() => otp.trim() && router.push('/reset-password')}
+            />
           </ThemedView>
 
           <ThemedView style={styles.footer}>
-            <ThemedText themeColor="textSecondary">Já tem uma conta?</ThemedText>
-            <Link href="/login">
-              <ThemedText type="link" themeColor="brandPrimary">Entrar</ThemedText>
+            <Link href="/forgot-password">
+              <ThemedText type="link" themeColor="brandPrimary">Não recebeu o código?</ThemedText>
             </Link>
           </ThemedView>
         </ThemedView>
@@ -96,10 +82,13 @@ const styles = StyleSheet.create({
   form: {
     gap: Spacing.three,
   },
+  otpInput: {
+    textAlign: 'center',
+    letterSpacing: 8,
+  },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: Spacing.one,
     marginTop: Spacing.four,
   },
 });
