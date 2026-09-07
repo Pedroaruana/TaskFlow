@@ -22,7 +22,10 @@ namespace TaskFlow
 
         private void lnkForgotPassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // Forgot password flow is covered by issue #8.
+            Hide();
+            using var forgotPassword = new ForgotPasswordForm();
+            forgotPassword.ShowDialog(this);
+            Show();
         }
     }
 }
